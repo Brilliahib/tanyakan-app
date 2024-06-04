@@ -33,7 +33,7 @@ export default function Login() {
       <div className="flex w-full">
         <div className="flex w-full">
           <div className="w-full flex items-center justify-center">
-            <div className="h-screen flex flex-col items-center w-full justify-center">
+            <div className="h-screen flex flex-col items-center w-full justify-center px-4">
               <div className="max-w-sm text-center">
                 <h1 className="font-bold text-2xl mb-4">Tanyakan App</h1>
                 <p className="text-gray-500 mb-10">
