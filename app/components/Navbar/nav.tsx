@@ -12,7 +12,7 @@ export default function Navbar() {
             <div className="flex items-center">
               <p>/</p>
               <a
-                href=""
+                href="/login"
                 className="ml-2 text-sm font-medium hover:underline dark:text-zinc-200"
               >
                 Login
