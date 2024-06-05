@@ -10,30 +10,15 @@ export default function Navbar() {
 
   return (
     <>
-      <header>
-        <div className="top-0 z-50 flex h-16 w-full shrink-0 items-center justify-between border-b bg-gradient-to-b px-4 backdrop-blur-xl">
+      <header className="px-4 sticky top-0 z-40 flex w-full items-center justify-between border-b bg-background py-4">
+        <div className="flex items-center">
           <div className="flex items-center">
-            <div className="flex items-center">
-              <a href="" className="text-sm font-medium mr-2">
-                Tanyakan
-              </a>
-            </div>
-            <div className="flex items-center">
-              <p>/</p>
-              {user ? (
-                <p className="ml-2 text-sm font-medium">{user.displayName}</p>
-              ) : (
-                <a
-                  href="/login"
-                  className="ml-2 text-sm font-medium hover:underline dark:text-zinc-200"
-                >
-                  Login
-                </a>
-              )}
-            </div>
-            <div></div>
+            <a href="" className="text-sm font-medium mr-2">
+              Tanyakan
+            </a>
           </div>
           <div className="flex items-center">
+            <p>/</p>
             {user ? (
               <a
                 className="cursor-pointer ml-2 text-sm font-medium hover:underline dark:text-zinc-200"
@@ -42,9 +27,23 @@ export default function Navbar() {
                 Logout
               </a>
             ) : (
-              <p></p>
+              <a
+                href="/login"
+                className="cursor-pointer ml-2 text-sm font-medium hover:underline dark:text-zinc-200"
+              >
+                Login
+              </a>
             )}
           </div>
+        </div>
+        <div className="flex items-center">
+          {user ? (
+            <p className="ml-2 text-sm font-medium">
+              Hello, {user.displayName}!
+            </p>
+          ) : (
+            <p></p>
+          )}
         </div>
       </header>
     </>

@@ -1,11 +1,12 @@
 "use client";
 import Navbar from "./components/Navbar/nav";
+import Link from "next/link"; // Import the Link component
 
 export default function MyApp() {
   return (
     <>
       <Navbar />
-      <div className="flex px-4 justify-center text-center py-6 md:py-24">
+      <div className="flex px-4 justify-center text-center py-12 md:py-24">
         <div className="">
           <div className="hero-text max-w-3xl">
             <h1 className="text-3xl font-semibold mb-4">
@@ -17,12 +18,18 @@ export default function MyApp() {
               rumit sekalipun
             </p>
             <div className="flex items-center justify-center gap-x-4 flex-wrap">
-              <button className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-black text-white px-6 border-2 py-1.5 h-fit">
+              <Link
+                href="/question"
+                className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm md:text-base font-medium disabled:pointer-events-none disabled:opacity-50 bg-black text-white px-6 border-2 py-1.5 h-fit"
+              >
                 Explore
-              </button>
-              <button className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-white text-black px-6 border-2 py-1.5 h-fit">
+              </Link>
+              <Link
+                href="/question/add"
+                className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm md:text-base font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-white text-black px-6 border-2 py-1.5 h-fit"
+              >
                 Add a Question
-              </button>
+              </Link>
             </div>
           </div>
         </div>
