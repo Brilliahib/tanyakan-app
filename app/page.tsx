@@ -1,3 +1,4 @@
+"use client";
 import Navbar from "./components/Navbar/nav";
 
 export default function MyApp() {

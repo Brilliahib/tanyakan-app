@@ -1,17 +1,57 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { auth, googleProvider } from "../../lib/firebase/firebase";
-import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+import {
+  signInWithEmailAndPassword,
+  signInWithPopup,
+  onAuthStateChanged,
+  User,
+} from "firebase/auth";
 
-export default function Login() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+interface LoginProps {}
 
-  const handleLogin = async (e: any) => {
+interface FormState {
+  email: string;
+  password: string;
+}
+
+const initialFormState: FormState = {
+  email: "",
+  password: "",
+};
+
+const Login: React.FC<LoginProps> = () => {
+  const [formState, setFormState] = useState<FormState>(initialFormState);
+  const [user, setUser] = useState<User | null>(null);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setUser(user);
+      } else {
+        setUser(null);
+      }
+    });
+
+    return () => unsubscribe();
+  }, []);
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormState((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await signInWithEmailAndPassword(auth, email, password);
-      // Redirect or handle successful login
+      await signInWithEmailAndPassword(
+        auth,
+        formState.email,
+        formState.password
+      );
     } catch (error) {
       console.error("Error logging in:", error);
       // Handle error (e.g., show an error message)
@@ -21,7 +61,6 @@ export default function Login() {
   const handleGoogleLogin = async () => {
     try {
       await signInWithPopup(auth, googleProvider);
-      // Redirect or handle successful login
     } catch (error) {
       console.error("Error logging in with Google:", error);
       // Handle error (e.g., show an error message)
@@ -45,28 +84,22 @@ export default function Login() {
                 onSubmit={handleLogin}
                 className="flex flex-col justify-center items-center text-foreground w-full max-w-sm gap-3 mb-4"
               >
-                <div className="flex flex-col-reverse items-start w-full mb-1 gap-1">
-                  <input
-                    type="email"
-                    name="email"
-                    id="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="w-full p-3 text-base font-medium text-slate-600 rounded-lg focus:outline-slate-400 placeholder:text-[#6B7280] lg:text-md bg-[#ebf2f7]"
-                    placeholder="Email"
-                  />
-                </div>
-                <div className="flex flex-col-reverse items-start w-full mb-1 gap-1">
-                  <input
-                    type="password"
-                    name="password"
-                    id="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    className="w-full p-3 text-base font-medium text-slate-600 rounded-lg focus:outline-slate-400 placeholder:text-[#6B7280] lg:text-md bg-[#ebf2f7] dark:border-none"
-                    placeholder="Password"
-                  />
-                </div>
+                <input
+                  type="email"
+                  name="email"
+                  value={formState.email}
+                  onChange={handleInputChange}
+                  className="w-full p-3 text-base font-medium text-slate-600 rounded-lg focus:outline-slate-400 placeholder:text-[#6B7280] lg:text-md bg-[#ebf2f7]"
+                  placeholder="Email"
+                />
+                <input
+                  type="password"
+                  name="password"
+                  value={formState.password}
+                  onChange={handleInputChange}
+                  className="w-full p-3 text-base font-medium text-slate-600 rounded-lg focus:outline-slate-400 placeholder:text-[#6B7280] lg:text-md bg-[#ebf2f7] dark:border-none"
+                  placeholder="Password"
+                />
                 <button
                   type="submit"
                   className="w-full py-2 text-white font-medium text-center rounded-md bg-black lg:text-lg"
@@ -114,4 +147,6 @@ export default function Login() {
       </div>
     </>
   );
-}
+};
+
+export default Login;
