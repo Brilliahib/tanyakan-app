@@ -1,5 +1,7 @@
+//login/page.tsx
 "use client";
 import React, { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { auth, googleProvider } from "../../lib/firebase/firebase";
 import {
   signInWithEmailAndPassword,
@@ -23,18 +25,21 @@ const initialFormState: FormState = {
 const Login: React.FC<LoginProps> = () => {
   const [formState, setFormState] = useState<FormState>(initialFormState);
   const [user, setUser] = useState<User | null>(null);
+  const router = useRouter();
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         setUser(user);
+        document.cookie = `token=${user.refreshToken}; path=/`; // Set the cookie on login
+        router.push("/"); // Redirect to home page after login
       } else {
         setUser(null);
       }
     });
 
     return () => unsubscribe();
-  }, []);
+  }, [router]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
