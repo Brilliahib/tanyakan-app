@@ -137,7 +137,7 @@ export default function QuestionDetail({ params }: { params: { id: string } }) {
           <div className="head-replies mb-6">
             <h1 className="text-lg font-semibold">Replies</h1>
           </div>
-          <div className="main-replies no-scrollbar mb-4 h-[64vh] space-y-6 overflow-y-auto scroll-smooth md:h-[54vh]">
+          <div className="main-replies no-scrollbar mb-4 h-[53vh] space-y-6 overflow-y-auto scroll-smooth md:h-[51vh]">
             {replies.map((reply, index) => (
               <div key={index} className="flex items-start gap-x-4">
                 <img
@@ -156,11 +156,11 @@ export default function QuestionDetail({ params }: { params: { id: string } }) {
               </div>
             ))}
           </div>
-          <div className="flex gap-x-4">
+          <div className="flex items-center gap-x-4">
             <textarea
               name="reply"
               id="reply"
-              className="flex w-full rounded-md border-input bg-transparent px-3 py-2 text-sm shadow-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 resize-none border"
+              className="flex w-full rounded-md border-input bg-transparent px-3 py-1 text-sm shadow-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 resize-none border"
               placeholder="Type your message..."
               value={newReply}
               onChange={(e) => setNewReply(e.target.value)}
@@ -175,7 +175,7 @@ export default function QuestionDetail({ params }: { params: { id: string } }) {
                 viewBox="0 0 24 24"
                 strokeWidth={1.5}
                 stroke="#fff"
-                className="size-6"
+                className="size-5"
               >
                 <path
                   strokeLinecap="round"
