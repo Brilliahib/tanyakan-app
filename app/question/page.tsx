@@ -11,15 +11,14 @@ import app from "@/lib/firebase/firebase";
 import Card from "../components/Card/card";
 import Navbar from "../components/Navbar/nav";
 import SearchBar from "../components/SearchBar/search-bar";
+import Button from "../components/Button/button";
 
 interface Question {
   id: string;
   text: string;
-  user: {
-    uid: string;
-    displayName: string;
-    photoURL: string;
-  };
+  uid: string;
+  displayName: string;
+  photoURL: string;
   timestamp?: {
     seconds: number;
     nanoseconds: number;
@@ -74,9 +73,11 @@ export default function Questions() {
     <>
       <Navbar />
       <div className="w-full bg-[#fafafa]">
-        <div className="mx-auto w-full max-w-3xl format format-sm sm:format-base lg:format-lg py-4 lg:py-8 px-4 md:px-0">
+        <div className="mx-auto w-full max-w-7xl format format-sm sm:format-base lg:format-lg py-4 lg:py-8 px-4 md:px-0">
           <div className="flex justify-between items-center mb-4">
-            <h1 className="font-bold text-xl">Cari Pertanyaan</h1>
+            <Button href="/question/add" rounded="lg" width="fit">
+              Add New Question
+            </Button>
             <SearchBar onSearchChange={handleSearchChange} />
           </div>
           {filteredQuestions.map((question) => {
@@ -84,7 +85,21 @@ export default function Questions() {
               ? new Date(question.timestamp.seconds * 1000)
               : null;
             return (
-              <Card key={question.id} rounded="md">
+              <Card
+                key={question.id}
+                rounded="md"
+                href={`/question/${question.id}`}
+              >
+                <div className="flex items-center gap-x-2 mb-2">
+                  <img
+                    src={question.photoURL}
+                    alt={question.displayName}
+                    className="rounded-full w-[30px] h-[30px] md:w-[40px] md:h-[40px]"
+                  />
+                  <h1 className="font-semibold text-sm md:text-base">
+                    {question.displayName}
+                  </h1>
+                </div>
                 <p className="text-lg font-semibold text-slate-900 mb-2 hover:underline cursor-pointer">
                   {question.text}
                 </p>

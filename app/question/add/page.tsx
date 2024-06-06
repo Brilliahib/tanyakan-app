@@ -11,6 +11,7 @@ import {
   serverTimestamp,
 } from "firebase/firestore";
 import { useState } from "react";
+import { getAuth } from "firebase/auth";
 
 export default function AddQuestion() {
   const router = useRouter();
@@ -23,14 +24,24 @@ export default function AddQuestion() {
     try {
       const firestore = getFirestore(app);
       const QuestionCollection = collection(firestore, "question");
+      const auth = getAuth(app);
+      const user = auth.currentUser;
 
-      await addDoc(QuestionCollection, {
+      if (!user) {
+        throw new Error("User not authenticated");
+      }
+
+      const { displayName, photoURL } = user;
+
+      const docRef = await addDoc(QuestionCollection, {
         text: newQuestion,
         timestamp: serverTimestamp(),
+        displayName: displayName || "Anonymous",
+        photoURL: photoURL,
       });
 
       setNewQuestion("");
-      router.push("/question");
+      router.push(`/question/${docRef.id}`);
     } catch (error) {
       console.error("Error adding question: ", error);
     }
