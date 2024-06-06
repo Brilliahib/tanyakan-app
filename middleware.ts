@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 import { NextRequest } from "next/server";
 
 export function middleware(req: NextRequest) {
-  const isLogin = req.cookies.get("token"); // Check if the token cookie exists
+  const isLogin = req.cookies.get("token");
   if (isLogin) {
     return NextResponse.next();
   } else {
@@ -12,5 +12,5 @@ export function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/"], // Apply middleware to the root path
+  matcher: ["/question/add"],
 };
