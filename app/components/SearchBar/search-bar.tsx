@@ -10,7 +10,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearchChange }) => {
       <form
         action=""
         method="get"
-        className="flex items-center border border-gray-300 py-1 px-2 rounded-lg"
+        className="flex items-center border border-gray-300 py-1 px-2 rounded-lg w-full"
       >
         <label htmlFor="search-input" className="mr-2 text-lg">
           <svg
