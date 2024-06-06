@@ -34,7 +34,7 @@ export default function Questions() {
 
   useEffect(() => {
     const firestore = getFirestore(app);
-    const questionCollection = collection(firestore, "question"); // Corrected collection name to "questions"
+    const questionCollection = collection(firestore, "question");
     const questionQuery = query(
       questionCollection,
       orderBy("timestamp", "desc")
@@ -53,7 +53,13 @@ export default function Questions() {
   }, []);
 
   if (loading) {
-    return <p>Loading...</p>;
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <div className="relative">
+          <div className="w-8 h-8 border-4 border-black border-t-transparent border-solid rounded-full animate-spin"></div>
+        </div>
+      </div>
+    );
   }
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -67,26 +73,30 @@ export default function Questions() {
   return (
     <>
       <Navbar />
-      <div className="mx-auto w-full max-w-3xl format format-sm sm:format-base lg:format-lg py-4 lg:py-8 px-4 md:px-0">
-        <div className="flex justify-between items-center mb-4">
-          <h1 className="font-bold text-xl">Cari Pertanyaan</h1>
-          <SearchBar onSearchChange={handleSearchChange} />
+      <div className="w-full bg-[#fafafa]">
+        <div className="mx-auto w-full max-w-3xl format format-sm sm:format-base lg:format-lg py-4 lg:py-8 px-4 md:px-0">
+          <div className="flex justify-between items-center mb-4">
+            <h1 className="font-bold text-xl">Cari Pertanyaan</h1>
+            <SearchBar onSearchChange={handleSearchChange} />
+          </div>
+          {filteredQuestions.map((question) => {
+            const date = question.timestamp
+              ? new Date(question.timestamp.seconds * 1000)
+              : null;
+            return (
+              <Card key={question.id} rounded="md">
+                <p className="text-lg font-semibold text-slate-900 mb-2 hover:underline cursor-pointer">
+                  {question.text}
+                </p>
+                {date && (
+                  <p className="text-xs text-gray-500">
+                    {date.toLocaleString()}
+                  </p>
+                )}
+              </Card>
+            );
+          })}
         </div>
-        {filteredQuestions.map((question) => {
-          const date = question.timestamp
-            ? new Date(question.timestamp.seconds * 1000)
-            : null;
-          return (
-            <Card key={question.id} rounded="md">
-              <p className="text-lg font-semibold text-slate-900 mb-2">
-                {question.text}
-              </p>
-              {date && (
-                <p className="text-xs text-gray-500">{date.toLocaleString()}</p>
-              )}
-            </Card>
-          );
-        })}
       </div>
     </>
   );

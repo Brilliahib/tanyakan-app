@@ -6,11 +6,11 @@ interface SearchBarProps {
 
 const SearchBar: React.FC<SearchBarProps> = ({ onSearchChange }) => {
   return (
-    <div className="flex justify-center">
+    <div className="flex justify-center bg-white">
       <form
         action=""
         method="get"
-        className="flex items-center border py-1 px-2 rounded-lg"
+        className="flex items-center border border-gray-300 py-1 px-2 rounded-lg"
       >
         <label htmlFor="search-input" className="mr-2 text-lg">
           <svg

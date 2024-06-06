@@ -1,8 +1,41 @@
+"use client";
 import Button from "@/app/components/Button/button";
+import { useRouter } from "next/navigation";
 import Card from "@/app/components/Card/card";
 import Navbar from "@/app/components/Navbar/nav";
+import app from "@/lib/firebase/firebase";
+import {
+  addDoc,
+  collection,
+  getFirestore,
+  serverTimestamp,
+} from "firebase/firestore";
+import { useState } from "react";
 
 export default function AddQuestion() {
+  const router = useRouter();
+  const [newQuestion, setNewQuestion] = useState<string>("");
+  const sendQuestion = async () => {
+    if (newQuestion.trim() === "") {
+      return;
+    }
+
+    try {
+      const firestore = getFirestore(app);
+      const QuestionCollection = collection(firestore, "question");
+
+      await addDoc(QuestionCollection, {
+        text: newQuestion,
+        timestamp: serverTimestamp(),
+      });
+
+      setNewQuestion("");
+      router.push("/question");
+    } catch (error) {
+      console.error("Error adding question: ", error);
+    }
+  };
+
   return (
     <>
       <Navbar />
@@ -13,14 +46,19 @@ export default function AddQuestion() {
           </h1>
           <div>
             <textarea
+              value={newQuestion}
+              onChange={(e) => setNewQuestion(e.target.value)}
               name="question"
               id="question"
               className="flex w-full rounded-md border-input bg-transparent px-3 py-2 text-sm shadow-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 anim min-h-24 resize-none border mb-4"
               placeholder="Write a question"
             ></textarea>
-            <Button bgColor="black" rounded="lg">
+            <button
+              onClick={sendQuestion}
+              className="bg-black w-full rounded-md text-white py-1"
+            >
               Submit
-            </Button>
+            </button>
           </div>
         </Card>
       </div>

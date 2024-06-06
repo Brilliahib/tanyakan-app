@@ -9,7 +9,7 @@ interface CardProps {
 
 const Card: React.FC<CardProps> = ({ children, rounded = "sm" }) => {
   const cardClasses = classNames(
-    "p-4 border mb-4", // Base classes
+    "p-4 border mb-4 bg-white border-gray-300", // Base classes
     {
       rounded: rounded === "sm",
       "rounded-md": rounded === "md",

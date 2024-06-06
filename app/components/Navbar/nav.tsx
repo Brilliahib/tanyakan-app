@@ -10,10 +10,10 @@ export default function Navbar() {
 
   return (
     <>
-      <header className="px-4 sticky top-0 z-40 flex w-full items-center justify-between border-b bg-background py-4">
+      <header className="px-4 sticky top-0 z-40 flex w-full items-center justify-between border-b border-gray-300 bg-white py-4">
         <div className="flex items-center">
           <div className="flex items-center">
-            <a href="" className="text-sm font-medium mr-2">
+            <a href="/" className="text-sm font-medium mr-2">
               Tanyakan
             </a>
           </div>
