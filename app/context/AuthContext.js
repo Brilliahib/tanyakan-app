@@ -27,6 +27,8 @@ export const AuthProvider = ({ children }) => {
 
   const signOut = async () => {
     try {
+      document.cookie =
+        "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
       await auth.signOut();
       setUser(null);
     } catch (error) {
