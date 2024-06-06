@@ -11,7 +11,7 @@ interface CardProps {
 
 const Card: React.FC<CardProps> = ({ children, rounded = "sm", href }) => {
   const cardClasses = classNames(
-    "p-4 border mb-4 bg-white border-gray-300", // Base classes
+    "p-4 border bg-white border-gray-300 md:mb-0 mb-4", // Base classes
     {
       "rounded-sm": rounded === "sm",
       "rounded-md": rounded === "md",

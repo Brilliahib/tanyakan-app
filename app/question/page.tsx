@@ -72,7 +72,7 @@ export default function Questions() {
   return (
     <>
       <Navbar />
-      <div className="w-full bg-[#fafafa]">
+      <div className="w-full">
         <div className="mx-auto w-full max-w-7xl format format-sm sm:format-base lg:format-lg py-4 lg:py-8 px-4 md:px-0">
           <div className="flex justify-between items-center mb-4 gap-x-4">
             <Button href="/question/add" rounded="lg" width="fit">
@@ -80,7 +80,7 @@ export default function Questions() {
             </Button>
             <SearchBar onSearchChange={handleSearchChange} />
           </div>
-          <div className="md:grid md:grid-cols-3">
+          <div className="md:grid md:grid-cols-3 gap-6">
             {filteredQuestions.map((question) => {
               const date = question.timestamp
                 ? new Date(question.timestamp.seconds * 1000)
@@ -97,11 +97,13 @@ export default function Questions() {
                       alt={question.displayName}
                       className="rounded-full w-[30px] h-[30px] md:w-[40px] md:h-[40px]"
                     />
-                    <h1 className="font-semibold text-sm md:text-base">
-                      {question.displayName}
-                    </h1>
+                    <div>
+                      <h1 className="font-semibold text-sm md:text-base">
+                        {question.displayName}
+                      </h1>
+                    </div>
                   </div>
-                  <p className="text-lg font-semibold text-slate-900 mb-2 hover:underline cursor-pointer">
+                  <p className="text-md text-slate-900 mb-2 hover:underline cursor-pointer">
                     {question.text}
                   </p>
                   {date && (
