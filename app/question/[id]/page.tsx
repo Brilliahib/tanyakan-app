@@ -135,7 +135,7 @@ export default function QuestionDetail({ params }: { params: { id: string } }) {
   return (
     <>
       <Navbar />
-      <div className="mx-auto w-full max-w-7xl format format-sm sm:format-base lg:format-lg py-4 lg:py-8 px-4">
+      <div className="mx-auto w-full max-w-7xl format format-sm sm:format-base lg:format-lg py-4 lg:py-6 px-4">
         <Card rounded="md">
           <div className="flex items-center gap-x-2 mb-4">
             <img
@@ -154,7 +154,7 @@ export default function QuestionDetail({ params }: { params: { id: string } }) {
             <h1 className="text-lg font-semibold">Replies</h1>
           </div>
           <div
-            className="main-replies mb-4 h-[50vh] space-y-6 overflow-y-auto scroll-smooth md:h-[45vh]"
+            className="main-replies h-[50vh] space-y-6 overflow-y-auto scroll-smooth"
             style={{ scrollbarWidth: "none" }}
           >
             {replies.map((reply, index) => (
