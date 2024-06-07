@@ -39,9 +39,16 @@ export default function Navbar() {
         </div>
         <div className="flex items-center">
           {user ? (
-            <p className="ml-2 text-sm font-medium">
-              Hello, {user.displayName}!
-            </p>
+            <div className="flex items-center gap-x-2 md:gap-x-3">
+              <p className="ml-2 text-sm font-medium">
+                Hello, {user.displayName}!
+              </p>
+              <img
+                src={user.photoURL}
+                alt={user.displayName}
+                className="h-[30px] w-[30px] md:h-[35px] md:w-[35px] rounded-full"
+              />
+            </div>
           ) : (
             <p></p>
           )}
