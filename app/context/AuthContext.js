@@ -1,6 +1,7 @@
 // AuthContext.js
 import React, { useContext, createContext, useState, useEffect } from "react";
 import { auth, googleProvider } from "@/lib/firebase/firebase";
+import Cookies from "js-cookie";
 
 const AuthContext = createContext();
 
@@ -11,6 +12,13 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       setUser(user);
+      if (user) {
+        user.getIdToken().then((token) => {
+          Cookies.set("token", token);
+        });
+      } else {
+        Cookies.remove("token");
+      }
       setLoading(false);
     });
     return () => unsubscribe();
@@ -20,6 +28,8 @@ export const AuthProvider = ({ children }) => {
     try {
       const result = await auth.signInWithPopup(googleProvider);
       setUser(result.user);
+      const token = await result.user.getIdToken();
+      Cookies.set("token", token);
     } catch (error) {
       console.error("Google sign in error:", error);
     }
@@ -27,8 +37,7 @@ export const AuthProvider = ({ children }) => {
 
   const signOut = async () => {
     try {
-      document.cookie =
-        "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+      Cookies.remove("token");
       await auth.signOut();
       setUser(null);
     } catch (error) {
