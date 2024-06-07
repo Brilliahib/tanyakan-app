@@ -137,7 +137,10 @@ export default function QuestionDetail({ params }: { params: { id: string } }) {
           <div className="head-replies mb-6">
             <h1 className="text-lg font-semibold">Replies</h1>
           </div>
-          <div className="main-replies no-scrollbar mb-4 h-[53vh] space-y-6 overflow-y-auto scroll-smooth md:h-[51vh]">
+          <div
+            className="main-replies mb-4 h-[53vh] space-y-6 overflow-y-auto scroll-smooth md:h-[51vh]"
+            style={{ scrollbarWidth: "none" }}
+          >
             {replies.map((reply, index) => (
               <div key={index} className="flex items-start gap-x-4">
                 <img
@@ -156,7 +159,7 @@ export default function QuestionDetail({ params }: { params: { id: string } }) {
               </div>
             ))}
           </div>
-          <div className="flex items-center gap-x-4">
+          <div className="flex items-center gap-x-4 mt-12">
             <textarea
               name="reply"
               id="reply"

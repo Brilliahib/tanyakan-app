@@ -19,7 +19,7 @@ const Button: React.FC<ButtonProps> = ({
   width = "full",
 }) => {
   const buttonClasses = classNames(
-    "inline-flex items-center justify-center whitespace-nowrap text-sm font-semibold disabled:pointer-events-none disabled:opacity-50 px-6 border-2 py-2 h-fit text-white", // Base classes
+    "inline-flex items-center justify-center whitespace-nowrap text-sm font-semibold disabled:pointer-events-none disabled:opacity-50 px-6 py-2 h-fit text-white", // Base classes
     {
       "w-full": width === "full",
       "w-fit": width === "fit",
