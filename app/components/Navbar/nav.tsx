@@ -14,7 +14,7 @@ export default function Navbar() {
       <header className="px-4 sticky top-0 z-40 flex w-full items-center justify-between border-b border-gray-300 bg-white py-4">
         <div className="flex items-center">
           <div className="flex items-center">
-            <Link href="/" className="text-sm font-medium mr-2">
+            <Link href="/" className="text-sm font-semibold mr-2">
               Tanyakan
             </Link>
           </div>
