@@ -1,6 +1,5 @@
 "use client";
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 import {
   doc,
   getDoc,
@@ -13,8 +12,15 @@ import {
 import app from "@/lib/firebase/firebase";
 import Navbar from "@/app/components/Navbar/nav";
 import Card from "@/app/components/Card/card";
-import Button from "@/app/components/Button/button";
+import { useAuth } from "@/app/context/AuthContext";
 import { getAuth } from "firebase/auth";
+import {
+  signInWithEmailAndPassword,
+  signInWithPopup,
+  onAuthStateChanged,
+  User,
+} from "firebase/auth";
+import { googleProvider, auth } from "@/lib/firebase/firebase";
 
 interface Question {
   text: string;
@@ -34,6 +40,7 @@ export default function QuestionDetail({ params }: { params: { id: string } }) {
   const [question, setQuestion] = useState<Question | null>(null);
   const [replies, setReplies] = useState<Reply[]>([]);
   const [newReply, setNewReply] = useState<string>("");
+  const { user } = useAuth();
 
   useEffect(() => {
     const fetchQuestion = async () => {
@@ -106,6 +113,15 @@ export default function QuestionDetail({ params }: { params: { id: string } }) {
     }
   };
 
+  const handleGoogleLogin = async () => {
+    try {
+      await signInWithPopup(auth, googleProvider);
+    } catch (error) {
+      console.error("Error logging in with Google:", error);
+      // Handle error (e.g., show an error message)
+    }
+  };
+
   if (!question) {
     return (
       <div className="flex items-center justify-center h-screen">
@@ -138,7 +154,7 @@ export default function QuestionDetail({ params }: { params: { id: string } }) {
             <h1 className="text-lg font-semibold">Replies</h1>
           </div>
           <div
-            className="main-replies mb-4 h-[53vh] space-y-6 overflow-y-auto scroll-smooth md:h-[51vh]"
+            className="main-replies mb-4 h-[50vh] space-y-6 overflow-y-auto scroll-smooth md:h-[45vh]"
             style={{ scrollbarWidth: "none" }}
           >
             {replies.map((reply, index) => (
@@ -159,34 +175,77 @@ export default function QuestionDetail({ params }: { params: { id: string } }) {
               </div>
             ))}
           </div>
-          <div className="flex items-center gap-x-4 mt-12">
-            <textarea
-              name="reply"
-              id="reply"
-              className="flex w-full rounded-md border-input bg-transparent px-3 py-1 text-sm shadow-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 resize-none border"
-              placeholder="Type your message..."
-              value={newReply}
-              onChange={(e) => setNewReply(e.target.value)}
-            ></textarea>
-            <button
-              onClick={handleReplySubmit}
-              className="p-4 bg-black rounded-xl"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="#fff"
-                className="size-5"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5"
-                />
-              </svg>
-            </button>
+          <div className="mt-6 border-t">
+            {user ? (
+              <div className="mt-4 flex w-full gap-x-4 items-ends">
+                <textarea
+                  name="reply"
+                  id="reply"
+                  className="flex w-full rounded-md border-input bg-transparent px-3 py-1 text-sm shadow-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 resize-none border"
+                  placeholder="Type your message..."
+                  value={newReply}
+                  onChange={(e) => setNewReply(e.target.value)}
+                ></textarea>
+                <button
+                  onClick={handleReplySubmit}
+                  className="p-4 bg-black rounded-xl"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="#fff"
+                    className="size-5"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5"
+                    />
+                  </svg>
+                </button>
+              </div>
+            ) : (
+              <div className="text-center mt-2 flex justify-center">
+                <div>
+                  <p className="text-md text-gray-500 mb-4">
+                    Please signin to chat
+                  </p>
+                  <button
+                    onClick={handleGoogleLogin}
+                    className="px-4 py-2 justify-center flex gap-x-2 items-center font-medium text-center rounded-md bg-white border text-gray-600"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      x="0px"
+                      y="0px"
+                      width="30"
+                      height="30"
+                      viewBox="0 0 48 48"
+                    >
+                      <path
+                        fill="#FFC107"
+                        d="M43.611,20.083H42V20H24v8h11.303c-1.649,4.657-6.08,8-11.303,8c-6.627,0-12-5.373-12-12c0-6.627,5.373-12,12-12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C12.955,4,4,12.955,4,24c0,11.045,8.955,20,20,20c11.045,0,20-8.955,20-20C44,22.659,43.862,21.35,43.611,20.083z"
+                      ></path>
+                      <path
+                        fill="#FF3D00"
+                        d="M6.306,14.691l6.571,4.819C14.655,15.108,18.961,12,24,12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C16.318,4,9.656,8.337,6.306,14.691z"
+                      ></path>
+                      <path
+                        fill="#4CAF50"
+                        d="M24,44c5.166,0,9.86-1.977,13.409-5.192l-6.19-5.238C29.211,35.091,26.715,36,24,36c-5.202,0-9.619-3.317-11.283-7.946l-6.522,5.025C9.505,39.556,16.227,44,24,44z"
+                      ></path>
+                      <path
+                        fill="#1976D2"
+                        d="M43.611,20.083H42V20H24v8h11.303c-0.792,2.237-2.231,4.166-4.087,5.571c0.001-0.001,0.002-0.001,0.003-0.002l6.19,5.238C36.971,39.205,44,34,44,24C44,22.659,43.862,21.35,43.611,20.083z"
+                      ></path>
+                    </svg>
+                    <span>Sign In with Google</span>
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>
