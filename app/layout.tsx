@@ -9,6 +9,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <title>Tanyakan App</title>
+      </head>
       <AuthProvider>
         <body>{children}</body>
       </AuthProvider>
