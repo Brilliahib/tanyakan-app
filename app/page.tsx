@@ -11,7 +11,7 @@ export default function MyApp() {
         <div className="">
           <div className="hero-text max-w-3xl">
             <h1 className="text-3xl font-semibold mb-4">
-              Welcome to the Tanyakan!
+              Welcome to the Tanyakan!🚀
             </h1>
             <p className="text-base text-gray-500 text-base mb-6 md:mb-8">
               Tanyakan adalah tempat berbagi cerita seru, penuh dengan
