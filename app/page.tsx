@@ -1,6 +1,7 @@
 "use client";
 import Navbar from "./components/Navbar/nav";
-import Link from "next/link"; // Import the Link component
+import Link from "next/link";
+import Marquee from "./components/Marquee/marquee";
 
 export default function MyApp() {
   return (
@@ -34,6 +35,7 @@ export default function MyApp() {
           </div>
         </div>
       </div>
+      <Marquee />
     </>
   );
 }
