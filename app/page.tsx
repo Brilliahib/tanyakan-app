@@ -21,7 +21,7 @@ export default function MyApp() {
             <div className="flex items-center justify-center gap-x-4 flex-wrap">
               <Link
                 href="/question"
-                className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm md:text-base font-semibold disabled:pointer-events-none disabled:opacity-50 bg-black text-white px-6 border-2 py-1.5 h-fit"
+                className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm md:text-base font-semibold disabled:pointer-events-none disabled:opacity-50 bg-black text-white px-6 border-2 py-1.5 h-fit hover:bg-[#1e1e1e]"
               >
                 Explore
               </Link>
@@ -29,7 +29,7 @@ export default function MyApp() {
                 href="/question/add"
                 className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm md:text-base font-semibold ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-white text-black px-6 border-2 py-1.5 h-fit"
               >
-                Add a Question
+                Add Story
               </Link>
             </div>
           </div>
