@@ -68,7 +68,7 @@ const Navbar: React.FC = () => {
                       alt={user.displayName}
                       className="w-[30px] h-[30px] rounded-full"
                     />
-                    <p className="md:text-base text-sm text-gray-500">
+                    <p className="font-medium text-sm text-gray-600">
                       {user.displayName}
                     </p>
                   </div>
@@ -79,15 +79,14 @@ const Navbar: React.FC = () => {
               <hr className="mb-4" />
               <a
                 onClick={handleLogout}
-                className="cursor-pointer text-sm font-medium hover:underline text-gray-600 flex gap-x-2 items-center"
+                className="cursor-pointer text-sm font-medium hover:underline text-gray-500 flex gap-x-2 items-center"
               >
-                Sign out
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
                   viewBox="0 0 24 24"
                   strokeWidth={1.5}
-                  stroke="#A52A2A"
+                  stroke="#6b7280"
                   className="size-6"
                 >
                   <path
@@ -96,6 +95,7 @@ const Navbar: React.FC = () => {
                     d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15M12 9l-3 3m0 0 3 3m-3-3h12.75"
                   />
                 </svg>
+                Sign out
               </a>
             </li>
           </ul>
