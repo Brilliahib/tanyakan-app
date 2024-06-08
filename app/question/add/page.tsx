@@ -66,7 +66,7 @@ export default function AddQuestion() {
             ></textarea>
             <button
               onClick={sendQuestion}
-              className="bg-black w-full rounded-md text-white py-1"
+              className="bg-black w-full rounded-md text-white py-2 font-semibold"
             >
               Submit
             </button>
