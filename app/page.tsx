@@ -11,12 +11,12 @@ export default function MyApp() {
         <div className="">
           <div className="hero-text max-w-3xl">
             <h1 className="text-3xl font-semibold mb-4">
-              Enjoy Everyday With Tanyakan
+              Welcome to the Tanyakan!
             </h1>
             <p className="text-base text-gray-500 text-base mb-6 md:mb-8">
-              Tanyakan adalah tempat berbagi ilmu ratusan juta siswa dan pakar
-              edukasi, belajar bersama untuk menyelesaikan soal-soal yang paling
-              rumit sekalipun
+              Tanyakan adalah tempat berbagi cerita seru, penuh dengan
+              kesenangan dan keceriaan. Bergabunglah untuk menikmati momen-momen
+              yang menyenangkan dan penuh tawa!
             </p>
             <div className="flex items-center justify-center gap-x-4 flex-wrap">
               <Link
