@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import { useAuth } from "@/app/context/AuthContext";
 
 const Navbar: React.FC = () => {
   const { user, signOut } = useAuth();
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
+  const navMenuRef = useRef<HTMLDivElement>(null);
 
   const handleUserButtonClick = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -13,6 +14,27 @@ const Navbar: React.FC = () => {
   const handleLogout = () => {
     signOut();
   };
+
+  const handleClickOutside = (event: MouseEvent) => {
+    if (
+      navMenuRef.current &&
+      !navMenuRef.current.contains(event.target as Node)
+    ) {
+      setIsMenuOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    if (isMenuOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isMenuOpen]);
 
   return (
     <>
@@ -52,6 +74,7 @@ const Navbar: React.FC = () => {
         </a>
         <nav
           id="nav-menu"
+          ref={navMenuRef}
           className={`${
             isMenuOpen ? "block" : "hidden"
           } absolute p-3 bg-white shadow border rounded-md max-w-[250px] w-fit right-4 top-full ${
